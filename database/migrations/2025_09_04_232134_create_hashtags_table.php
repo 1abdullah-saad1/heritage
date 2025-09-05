@@ -6,20 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('hashtags', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('hashtags', function (Blueprint $t) {
+            $t->id();
+            $t->string('tag')->unique();
+            $t->unsignedBigInteger('uses')->default(0);
+            $t->timestamps();
         });
+
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('hashtags');
