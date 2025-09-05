@@ -12,12 +12,12 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+    {// مثال Breeze الافتراضي:
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'username' => 'testuser', // ⬅️ أضِف هذا
+        //     'email' => 'test@example.com',
+        // ]);
+        $this->call(RolesSeeder::class);
     }
 }
