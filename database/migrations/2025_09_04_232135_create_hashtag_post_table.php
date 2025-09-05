@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hashtag_post', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('hashtag_post', function (Blueprint $t) {
+            $t->id();
+            $t->foreignId('hashtag_id')->constrained('hashtags')->cascadeOnDelete();
+            $t->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $t->unique(['hashtag_id', 'post_id']);
         });
     }
 
