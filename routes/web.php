@@ -3,10 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::view('/', 'welcome')->name('home'); // Placeholder
 
+    // لاحقاً: Feed/Index + Review/Queue + Expert/Queue ...
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
