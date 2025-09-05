@@ -6,20 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('likes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('likes', function (Blueprint $t) {
+            $t->id();
+            $t->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $t->morphs('likeable'); // likeable_id, likeable_type
+            $t->timestamps();
+            $t->unique(['user_id', 'likeable_id', 'likeable_type'], 'uniq_user_like_target');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('likes');
