@@ -6,20 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('post_media', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('post_media', function (Blueprint $t) {
+            $t->id();
+            $t->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $t->string('path');
+            $t->string('type', 16)->default('image'); // image|video|doc
+            $t->unsignedSmallInteger('order')->default(0);
+            $t->string('role', 16)->nullable();       // optional: evidence|attachment
+            $t->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('post_media');
