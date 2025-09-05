@@ -17,5 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/review', \App\Livewire\Review\Queue::class)->name('review.queue');
+    Route::get('/review/{post}', \App\Livewire\Review\Detail::class)->name('review.detail');
+});
