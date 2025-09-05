@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('reviews', function (Blueprint $t) {
+            $t->id();
+            $t->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $t->foreignId('reviewer_id')->constrained('users')->cascadeOnDelete();
+            $t->string('action', 32); // submit|start_review|request_changes|approve|reject
+            $t->text('note')->nullable();
+            $t->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('reviews');
